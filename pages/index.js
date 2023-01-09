@@ -1,6 +1,6 @@
 import Head from "next/head";
 import CountDownReg from "../components/CountDownReg";
-
+import CountDownPre from "../components/CountDownPre";
 export default function Home() {
   return (
     <>
@@ -11,9 +11,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>
-          <CountDownReg seconds={360} />
-        </h1>
+        <div>
+          <h1>
+            <CountDownReg seconds={360} />
+          </h1>
+          <h1>
+            <CountDownPre seconds={210} />
+          </h1>
+        </div>
       </main>
     </>
   );

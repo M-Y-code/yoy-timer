@@ -70,7 +70,7 @@ export default function CountDown({ seconds }) {
     <>
       {isShowTimer ? <div>{formatTime(countdown)}</div> : null}
       {isUp ? <div>up</div> : null}
-      {isShowBtn ? <button onClick={handleClickStert}>REG</button> : null}
+      {isShowBtn ? <button onClick={handleClickStert}>プレ</button> : null}
       {isShowStopBtn ? <button onClick={handleClickStop}>×</button> : null}
       {isShowBariBtn ? <button onClick={handleClickBari}>バリ</button> : null}
       {isShowKatameBtn ? (
