@@ -47,10 +47,10 @@ export default function CountDown({ seconds }) {
   });
 
   const handleClickKatame = useCallback(() => {
-    setCountdown((prev) => prev - 90);
+    setCountdown((prev) => prev - 60);
   });
   const handleClickBari = useCallback(() => {
-    setCountdown((prev) => prev - 240);
+    setCountdown((prev) => prev - 180);
   });
   const handleClickYawa = useCallback(() => {
     setCountdown((prev) => prev + 120);
