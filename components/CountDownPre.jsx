@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 const formatTime = (time) => {
   let minutes = Math.floor(time / 60);
@@ -20,9 +20,19 @@ export default function CountDown({ seconds }) {
   const [isShowBariBtn, setIsShowBariBtn] = useState(false);
   const [isShowYawaBtn, setIsShowYawaBtn] = useState(false);
 
-  const handleClickStert = useCallback(() => {
+  const {
+    isShowReg,
+    setIsShowReg,
+    isShowPre,
+    setIsShowPre,
+    pushStart,
+    pushStop,
+  } = useContext(isShowBtnContext);
+
+  const handleClickStart = useCallback(() => {
     setIsUp((isUp) => false);
-    setIsShowBtn((isShowBtn) => false);
+    setIsShowReg((isShowReg) => false);
+    setIsShowPre((isShowPre) => false);
     setIsShowTimer((isShowTimer) => true);
     setIsShowStopBtn((isShowStopBtn) => true);
     setIsShowKatameBtn((isShowKatameBtn) => true);
@@ -35,7 +45,8 @@ export default function CountDown({ seconds }) {
   }, []);
 
   const handleClickStop = useCallback(() => {
-    setIsShowBtn((isShowBtn) => true);
+    setIsShowReg((isShowReg) => true);
+    setIsShowPre((isShowPre) => true);
     setIsShowTimer((isShowTimer) => false);
     setIsShowStopBtn((isShowStopBtn) => false);
     setIsUp((isUp) => false);
@@ -70,7 +81,7 @@ export default function CountDown({ seconds }) {
     <>
       {isShowTimer ? <div>{formatTime(countdown)}</div> : null}
       {isUp ? <div>up</div> : null}
-      {isShowBtn ? <button onClick={handleClickStert}>プレ</button> : null}
+      {isShowBtn ? <button onClick={handleClickStart}>プレ</button> : null}
       {isShowStopBtn ? <button onClick={handleClickStop}>×</button> : null}
       {isShowBariBtn ? <button onClick={handleClickBari}>バリ</button> : null}
       {isShowKatameBtn ? (
