@@ -16,18 +16,25 @@ export default function CountDown({ seconds }) {
   const [isShowTimer, setIsShowTimer] = useState(false);
   const [isShowBtn, setIsShowBtn] = useState(true);
   const [isShowStopBtn, setIsShowStopBtn] = useState(false);
+  const [isShowFutuuBtn, setIsShowFutuuBtn] = useState(false);
+  const [futuuAct, setFutuuAct] = useState(false);
   const [isShowKatameBtn, setIsShowKatameBtn] = useState(false);
+  const [katameAct, setKatameAct] = useState(false);
   const [isShowBariBtn, setIsShowBariBtn] = useState(false);
+  const [bariAct, setBariAct] = useState(false);
   const [isShowYawaBtn, setIsShowYawaBtn] = useState(false);
+  const [yawaAct, setYawaAct] = useState(false);
 
   const handleClickStert = useCallback(() => {
     setIsUp((isUp) => false);
     setIsShowBtn((isShowBtn) => false);
     setIsShowTimer((isShowTimer) => true);
     setIsShowStopBtn((isShowStopBtn) => true);
+    setIsShowFutuuBtn((isShowFutuuBtn) => true);
     setIsShowKatameBtn((isShowKatameBtn) => true);
     setIsShowBariBtn((isShowBariBtn) => true);
     setIsShowYawaBtn((isShowYawaBtn) => true);
+    setFutuuAct((futuuAct) => true);
     timerId.current = setInterval(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
@@ -39,21 +46,81 @@ export default function CountDown({ seconds }) {
     setIsShowTimer((isShowTimer) => false);
     setIsShowStopBtn((isShowStopBtn) => false);
     setIsUp((isUp) => false);
+    setIsShowFutuuBtn((isShowFutuuBtn) => false);
     setIsShowKatameBtn((isShowKatameBtn) => false);
     setIsShowBariBtn((isShowBariBtn) => false);
     setIsShowYawaBtn((isShowYawaBtn) => false);
     clearInterval(timerId.current);
     setCountdown((prev) => seconds);
   });
-
-  const handleClickKatame = useCallback(() => {
-    setCountdown((prev) => prev - 90);
-  });
   const handleClickBari = useCallback(() => {
-    setCountdown((prev) => prev - 240);
+    setBariAct((bariAct) => true);
+    if (futuuAct === true) {
+      setCountdown((prev) => prev - 240);
+      setFutuuAct((futuuAct) => false);
+    } else {
+      if (katameAct === true) {
+        setCountdown((prev) => prev - 150);
+        setKatameAct((katameAct) => false);
+      } else {
+        if (yawaAct === true) {
+          setCountdown((prev) => prev - 330);
+          setYawaAct((yawaAct) => false);
+        }
+      }
+    }
   });
+  const handleClickKatame = useCallback(() => {
+    setKatameAct((katameAct) => true);
+    if (futuuAct === true) {
+      setCountdown((prev) => prev - 90);
+      setFutuuAct((futuuAct) => false);
+    } else {
+      if (bariAct === true) {
+        setCountdown((prev) => prev + 150);
+        setBariAct((bariAct) => false);
+      } else {
+        if (yawaAct === true) {
+          setCountdown((prev) => prev - 180);
+          setYawaAct((yawaAct) => false);
+        }
+      }
+    }
+  });
+  const handleClickFutuu = useCallback(() => {
+    setFutuuAct((futuuAct) => true);
+    if (katameAct === true) {
+      setCountdown((prev) => prev + 90);
+      setKatameAct((katameAct) => false);
+    } else {
+      if (bariAct === true) {
+        setCountdown((prev) => prev + 240);
+        setBariAct((bariAct) => false);
+      } else {
+        if (yawaAct === true) {
+          setCountdown((prev) => prev - 90);
+          setYawaAct((yawaAct) => false);
+        }
+      }
+    }
+  });
+
   const handleClickYawa = useCallback(() => {
-    setCountdown((prev) => prev + 120);
+    setYawaAct((yawaAct) => true);
+    if (katameAct === true) {
+      setCountdown((prev) => prev + 180);
+      setKatameAct((katameAct) => false);
+    } else {
+      if (bariAct === true) {
+        setCountdown((prev) => prev + 330);
+        setBariAct((bariAct) => false);
+      } else {
+        if (futuuAct === true) {
+          setCountdown((prev) => prev + 90);
+          setFutuuAct((futuuAct) => false);
+        }
+      }
+    }
   });
 
   useEffect(() => {
@@ -76,7 +143,9 @@ export default function CountDown({ seconds }) {
       {isShowKatameBtn ? (
         <button onClick={handleClickKatame}>かた</button>
       ) : null}
-
+      {isShowFutuuBtn ? (
+        <button onClick={handleClickFutuu}>ふつう</button>
+      ) : null}
       {isShowYawaBtn ? <button onClick={handleClickYawa}>やわ</button> : null}
     </>
   );
